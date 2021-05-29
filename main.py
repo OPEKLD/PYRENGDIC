@@ -136,6 +136,23 @@ def add_word_window():
     buttonSubmit.place(x=250, y=100)
 
 
+def yScrollEins(*args):
+    if pyrWordList.yview() != engWordList.yview():
+        pyrWordList.yview_moveto(args[0])
+    scrollBar.set(*args)
+
+
+def yScrollZwei(*args):
+    if engWordList.yview() != pyrWordList.yview():
+        engWordList.yview_moveto(args[0])
+    scrollBar.set(*args)
+
+
+def yView(*args):
+    engWordList.yview(*args)
+    pyrWordList.yview(*args)
+
+
 # Creates window
 window = Tk()  # Create a window
 window.geometry("1280x720")
@@ -183,7 +200,8 @@ engWordList = Listbox(window,
                       relief="groove",
                       width=50,
                       height=25,
-                      justify=CENTER)
+                      justify=CENTER,
+                      yscrollcommand=yScrollEins)
 
 pyrWordList = Listbox(window,
                       font=('Meiryo', 8),
@@ -193,7 +211,8 @@ pyrWordList = Listbox(window,
                       relief="groove",
                       width=50,
                       height=25,
-                      justify=CENTER)
+                      justify=CENTER,
+                      yscrollcommand=yScrollZwei)
 
 # Place List Boxes
 
@@ -245,6 +264,7 @@ buttonSwitch.place(x=165, y=0)
 
 scrollBar = Scrollbar(window)
 scrollBar.pack(side=RIGHT, fill=BOTH)
+scrollBar.config(command=yView)
 
 
 window.mainloop()  # Place window on computer screen
